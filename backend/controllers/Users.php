@@ -40,7 +40,7 @@ class Users
                 echo "Failed to register user.";
             }
         } else {
-            include '../views/users/register.php';
+            include '../viewss/users/register.php';
         }
     }
 }

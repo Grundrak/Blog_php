@@ -5,7 +5,7 @@ class Database
     private  $host = 'localhost';
     private $dbname = 'blog_php';
     private $username = 'root';
-    private $password = '14522';
+    private $password = 'YJbs7U#tLW4';
     private $dbh;
     private $stmt;
     private $error;
@@ -50,5 +50,21 @@ class Database
     public function rowCount() {
         return $this->stmt->rowCount();
     }
-            
+    public function prepare($sql) {
+        return $this->dbh->prepare($sql);
+    }
+//     public function createTablesFromFile($filePath) {
+//         try {
+//             $sql = file_get_contents($filePath);
+//             $this->dbh->exec($sql);
+//             echo "Les tables ont été créées avec succès.";
+//         } catch (PDOException $e) {
+//             exit("Erreur lors de la création des tables : " . $e->getMessage());
+//         }
+//     }     
+// }
+
+// $database = new Database();
+// $database->createTablesFromFile('../database/Tables.sql');
+
 }

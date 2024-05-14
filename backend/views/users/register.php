@@ -4,7 +4,7 @@
 
 <h1 class="header">Please Signup</h1>
 
-<form method="post" action="/blog-php/backend/index.php">
+<form method="post" action="/blog_php/backend/index.php">
     <input type="hidden" name="regs" value="register">
     <input type="text" name="first_name" placeholder="First name...">
     <input type="text" name="last_name" placeholder="Last name...">

@@ -18,7 +18,7 @@ class Users
         echo "<pre>";
         print_r($_POST);
         echo "</pre>";
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' )  {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
             $data = [
                 'user_name' => $_POST['user_name'] ?? '',
                 'first_name' => $_POST['first_name'] ?? '',

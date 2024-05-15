@@ -1,10 +1,11 @@
 <?php 
-    // include_once '../corps/navbar.php';
+
+    include_once '../corps/navbar.php';
 ?>
 
-<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="../404.css">
 
-<main class="flex flex-col justify-center items-center">
+<main class="flex flex-col justify-center items-center pt-16">
       <section class="hero">
         <article class="hero-image w-[55vw] h-[40vh]">
           <img
@@ -117,5 +118,5 @@
     </main>
 
 <?php 
-    // include_once '../corps/footer.php';
+    include_once '../corps/footer.php';
 ?>

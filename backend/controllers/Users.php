@@ -2,6 +2,7 @@
 
 require_once './models/User.php';
 
+
 class Users
 {
     private $userModel;
@@ -80,4 +81,11 @@ class Users
             include 'views/users/login.php';
         }
     }
+
+    public function fetchUsers() {
+        $users = $this->userModel->getAllUsers();
+        error_log("Fetched users: " . print_r($users, true));
+        include '../views/admin/users/index.php';
+    }
+
 }

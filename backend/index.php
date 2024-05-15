@@ -10,7 +10,7 @@ require_once 'controllers/Users.php';
 $request = $_REQUEST['regs'] ?? '';
 $method = $_SERVER['REQUEST_METHOD'];
 
-$commentsController = new Comments();
+// $commentsController = new Comments();
 
 switch ($request) {
     case '':
@@ -39,6 +39,13 @@ switch ($request) {
             $usersController->login();
         }
       break;
+      case 'fetchUsers':
+        if ($method == 'GET') {
+            echo 'fetch process';
+            $usersController = new Users();
+            $usersController->fetchUsers();
+        }
+        break;
     case 'createComment':
         if ($method == 'POST') {
             $commentsController->createComment($_POST);

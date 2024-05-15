@@ -2,7 +2,7 @@
     // include_once '../corps/navbar.php';
 ?>
 
-<link rel="stylesheet" href="articles.css">
+<link rel="stylesheet" href="../404.css">
 
 <main class="flex flex-col justify-center items-center">
       <div class="mr-[3%]">

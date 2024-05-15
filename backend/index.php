@@ -1,26 +1,36 @@
 <?php
 
+
 require_once 'config/config_db.php';
 require_once  'helpers/session.php';
 require_once 'controllers/Users.php';
 
 
+
 $request = $_REQUEST['regs'] ?? '';
 $method = $_SERVER['REQUEST_METHOD'];
 
+$commentsController = new Comments();
+
 switch ($request) {
     case '':
+
         require_once 'views/home/home.php';
+
         break;
+
     case 'register':
         if ($method == 'GET') {
+
             require_once 'views/users/register.php';
         } elseif ($method == 'POST' && $request == 'register') {
+
             echo 'inside register ss';
             $usersController = new Users();
             $usersController->register();
         }
         break;
+
     case 'login':
         if ($method == 'GET') {
             require_once 'views/users/login.php';
@@ -28,7 +38,38 @@ switch ($request) {
             $usersController = new Users();
             $usersController->login();
         }
-    default:
-        // redirect('404.php');
+      break;
+    case 'createComment':
+        if ($method == 'POST') {
+            $commentsController->createComment($_POST);
+        } 
+
         break;
+
+    case 'readComments':
+        if ($method == 'GET') {
+            $commentsController->getCommentsofArticle($_GET['article_id']);
+        } 
+        break;  
+        
+    case 'getCommentById':
+        if ($method == 'GET') {
+            $commentsController->getCommentById($_GET['id']);
+        } 
+        break;    
+
+    case 'updateComment':
+        if ($method == 'POST') {
+            $commentsController->updateComment($_POST['id'], $_POST['content']);
+        }  
+        break;  
+
+    case 'deleteComment':
+        if ($method == 'POST') {
+            $commentsController->deleteComment($_POST['id']);
+        }
+        break;   
+
+    default:
+        break;    
 }

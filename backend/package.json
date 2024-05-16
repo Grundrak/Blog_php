@@ -1,9 +1,8 @@
 {
   "scripts": {
-    "buildhome": "tailwindcss build style.css -o views/home/home.css --watch",
-    "buildarticles": "tailwindcss build style.css -o views/articles/articles.css --watch",
-    "buildposts": "tailwindcss build style.css -o views/post/posts.css --watch",
-    "buildcontacts": "tailwindcss build style.css -o views/contactus/contact.css --watch"
+
+    "builderr": "tailwindcss build style.css -o views/404.css --watch"
+
   },
 
   "devDependencies": {

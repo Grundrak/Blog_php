@@ -5,8 +5,10 @@ require_once './models/Article.php';
 class Articles {
     private $articlesModel;
 
-    public function __construct(Article $articlesModel) {
-        $this->articlesModel = $articlesModel;
+
+    public function __construct() {
+        $this->articlesModel = new Article();
+
     }
 
     public function createArticle($data) {
@@ -33,6 +35,7 @@ class Articles {
     }
 
     public function getArticles() {
+
         try {
             $articles = $this->articlesModel->getArticles();
     
@@ -99,4 +102,9 @@ class Articles {
         }
     }
 }
-?>
+
+        $articles = $this->articlesModel->getArticles();
+        return $articles;
+    }
+}
+

@@ -1,4 +1,12 @@
+# Set PHP session timeout (in seconds)
+php_value session.gc_maxlifetime 1440
+
+# Set the session cookie to last as long as the session.gc_maxlifetime
+php_value session.cookie_lifetime 1440
+
 RewriteEngine On
+# Exclude directories and files from being redirected
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+# Redirect all other requests to index.php
 RewriteRule ^ index.php [L]

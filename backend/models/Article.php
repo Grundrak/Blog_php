@@ -4,11 +4,13 @@ require_once './config/config_db.php';
 
 class Article {
     private $db;
-    private $articlesModel;
 
-    public function __construct(Database $db, Article $articlesModel) {
-        $this->db = $db;
-        $this->articlesModel = $articlesModel;
+
+    private $stmt;
+
+    public function __construct() {
+        $this->db = new Database();
+
     }
 
     public function createArticle($data) {
@@ -21,25 +23,19 @@ class Article {
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
-            throw new Exception('Create article error: ' . $e->getMessage());
+
+            error_log('Create article error: ' . $e->getMessage());
+            return false;
         }
     }
-    public function getArticleById($id) {
-        try {
-            $sql = "SELECT * FROM articles WHERE id = :id";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            throw new Exception('Error getting article by ID: ' . $e->getMessage());
-        }
-    }
+
+
     public function getArticles() {
         try {
             $sql = "SELECT * FROM articles";
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
+
             $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $articles ?: [];
         } catch (PDOException $e) {
@@ -75,4 +71,14 @@ class Article {
     }
 }
 
-?>
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Get articles error: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    
+}
+

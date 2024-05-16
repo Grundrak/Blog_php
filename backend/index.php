@@ -82,7 +82,7 @@ switch ($request) {
         
     case 'createArticle':
         if ($method == 'POST') {
-            $articlesController->createArticle($_POST['title'], $_POST['content'], $_POST['user_id']);
+            $articlesController->createArticle();
         }
         break;
     default:

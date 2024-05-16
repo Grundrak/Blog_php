@@ -68,6 +68,7 @@ class Users
             $user = $this->userModel->getUserByUsername($username);
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['logged_in'] = true;
+                $_SESSION['user_id'] = $user['id'];
                 setFlash('login_success', 'You are now logged in.');
                 header('Location: views/admin/dashboard.php');
                 exit;

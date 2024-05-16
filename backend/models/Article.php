@@ -14,16 +14,17 @@ class Article {
     }
 
     public function createArticle($data) {
+        
         try {
-            $sql = "INSERT INTO articles (title, content, user_id) VALUES (:title, :content, :user_id)";
+            $sql = "INSERT INTO articles (title, content, user_id, image_path) VALUES (:title, :content, :user_id, :image_path)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':title', $data['title']);
-            $stmt->bindParam(':content', $data['content']); 
+            $stmt->bindParam(':content', $data['content']);
             $stmt->bindParam(':user_id', $data['user_id']);
+            $stmt->bindParam(':image_path', $data['image']);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
-
             error_log('Create article error: ' . $e->getMessage());
             return false;
         }

@@ -2,9 +2,9 @@
 class Database {
 
     private  $host = 'localhost';
-    private $dbname = 'blog_db';
+    private $dbname = 'blog_php';
     private $username = 'root';
-    private $password = 'Ab20182018';
+    private $password = 'YJbs7U#tLW4';
     private $dbh;
     private $stmt;
     private $error;

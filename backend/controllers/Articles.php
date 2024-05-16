@@ -42,7 +42,8 @@ class Articles {
             if (empty($articles)) {
                 echo "No articles available.";
             } else {
-                include './views/articles/articles.php';
+                $_SESSION['fetchArticles']=$articles;
+                include 'views/articles/articles.php';
             }
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -103,8 +104,4 @@ class Articles {
     }
 }
 
-        $articles = $this->articlesModel->getArticles();
-        return $articles;
-    }
-}
 

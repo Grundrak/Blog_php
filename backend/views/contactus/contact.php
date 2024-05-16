@@ -1,3 +1,12 @@
+<?php
+
+include_once '../../helpers/session.php';
+include_once '../corps/navbar.php';
+?>
+
+
+<link rel="stylesheet" href="../404.css">
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,3 +59,7 @@
 </body>
 
 </html>
+
+<?php 
+    include_once '../corps/footer.php';
+?>

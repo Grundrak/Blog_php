@@ -70,15 +70,3 @@ class Article {
         }
     }
 }
-
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log('Get articles error: ' . $e->getMessage());
-            return [];
-        }
-    }
-
-    
-}
-

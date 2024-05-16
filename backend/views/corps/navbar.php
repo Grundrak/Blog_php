@@ -16,9 +16,9 @@ $flashMessages = getAndClearFlashMessages();
         <div class="container mx-auto flex items-center justify-between">
             <div class="flex items-center gap-16">
                 <a aria-current="page" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/views/home/home.php">Home</a>
-                <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="#">Blog</a>
-                <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="#">Post</a>
-                <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="#">Contact Us</a>
+                <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/views/articles/articles.php">Blog</a>
+                <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/views/post/post.php">Post</a>
+                <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/views/contactus/contact.php">Contact Us</a>
             </div>
             <div class="flex items-center gap-7">
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>

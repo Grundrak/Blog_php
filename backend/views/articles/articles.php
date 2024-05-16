@@ -1,7 +1,4 @@
 
-
-
-
 <link rel="stylesheet" href="../404.css">
 
 
@@ -42,3 +39,4 @@
       ?>
     </section>
 </main>
+

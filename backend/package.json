@@ -1,10 +1,7 @@
 {
   "scripts": {
-    "buildhome": "tailwindcss build style.css -o views/home/home.css --watch",
-    "buildarticles": "tailwindcss build style.css -o views/articles/articles.css --watch",
-    "buildreg": "tailwindcss build style.css -o views/users/register.css --watch",
-    "buildlog": "tailwindcss build style.css -o views/users/login.css --watch",
     "builderr": "tailwindcss build style.css -o views/404.css --watch"
+
   },
   "devDependencies": {
     "tailwindcss": "^3.4.3"

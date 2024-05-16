@@ -1,6 +1,5 @@
 <?php
-class Database
-{
+class Database {
 
     private  $host = 'localhost';
     private $dbname = 'blog_php';
@@ -53,18 +52,18 @@ class Database
     public function prepare($sql) {
         return $this->dbh->prepare($sql);
     }
-//     public function createTablesFromFile($filePath) {
-//         try {
-//             $sql = file_get_contents($filePath);
-//             $this->dbh->exec($sql);
-//             echo "Les tables ont été créées avec succès.";
-//         } catch (PDOException $e) {
-//             exit("Erreur lors de la création des tables : " . $e->getMessage());
-//         }
-//     }     
-// }
+    //     public function createTablesFromFile($filePath) {
+    //         try {
+    //             $sql = file_get_contents($filePath);
+    //             $this->dbh->exec($sql);
+    //             echo "Les tables ont été créées avec succès.";
+    //         } catch (PDOException $e) {
+    //             exit("Erreur lors de la création des tables : " . $e->getMessage());
+    //         }
+    //     }     
+    // }
 
-// $database = new Database();
-// $database->createTablesFromFile('../database/Tables.sql');
+    // $database = new Database();
+    // $database->createTablesFromFile('../database/Tables.sql');
 
 }

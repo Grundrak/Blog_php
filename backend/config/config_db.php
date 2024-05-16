@@ -3,9 +3,9 @@ class Database
 {
 
     private  $host = 'localhost';
-    private $dbname = 'blog_php';
+    private $dbname = 'blog_db';
     private $username = 'root';
-    private $password = 'YJbs7U#tLW4';
+    private $password = 'Ab20182018';
     private $dbh;
     private $stmt;
     private $error;

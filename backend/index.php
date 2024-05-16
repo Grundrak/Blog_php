@@ -6,7 +6,6 @@ require_once  'helpers/session.php';
 require_once 'controllers/Users.php';
 
 
-
 $request = $_REQUEST['regs'] ?? '';
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -41,7 +40,6 @@ switch ($request) {
       break;
       case 'fetchUsers':
         if ($method == 'GET') {
-            echo 'fetch process';
             $usersController = new Users();
             $usersController->fetchUsers();
         }

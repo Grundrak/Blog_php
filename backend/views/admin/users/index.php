@@ -1,12 +1,6 @@
-
-<?php
-if (empty($users)) {
-    echo "<p>No users found.</p>";
-} else {
-    foreach ($users as $user) {
-        echo "<p>" . htmlspecialchars($user['user_name']) . "</p>";
-    }
-}
+<?php 
+require_once '../../../helpers/session.php';
+$users = $_SESSION['fetchUsers'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +20,7 @@ if (empty($users)) {
                     <ul>
                         <li class="mb-2"><a href="/blog-php/backend/views/admin/dashboard.php" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg">Dashboard</a></li>
                         <li class="mb-2"><a href="/blog-php/backend/views/admin/articles/index.php" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg">Manage Articles</a></li>
-                        <li class="mb-2"><a href="/blog-php/backend/views/admin/users/index.php?regs=fetchUsers" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg">View Users</a></li>
+                        <li class="mb-2"><a href="/blog-php/backend/index.php?regs=fetchUsers" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg">View Users</a></li>
                     </ul>
                 </nav>
             </aside>

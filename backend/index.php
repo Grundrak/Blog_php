@@ -1,16 +1,19 @@
 <?php
 
 
+
 require_once 'config/config_db.php';
 require_once  'helpers/session.php';
 require_once 'controllers/Users.php';
-
+require_once 'controllers/Comments.php';
+require_once 'controllers/Articles.php';
 
 
 $request = $_REQUEST['regs'] ?? '';
 $method = $_SERVER['REQUEST_METHOD'];
 
 $commentsController = new Comments();
+$articlesController = new Articles();
 
 switch ($request) {
     case '':
@@ -68,8 +71,13 @@ switch ($request) {
         if ($method == 'POST') {
             $commentsController->deleteComment($_POST['id']);
         }
-        break;   
-
+        break;  
+        
+    case 'createArticle':
+        if ($method == 'POST') {
+            $articlesController->createArticle($_POST['title'], $_POST['content'], $_POST['user_id']);
+        }
+        break;
     default:
         break;    
 }

@@ -1,4 +1,8 @@
-<link rel="stylesheet" href="../output.css" />
+
+
+
+
+<link rel="stylesheet" href="../404.css">
 
 
 <main class="flex flex-col justify-center items-center">

@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "tailwindcss build style.css -o views/output.css --watch"
+    "builderr": "tailwindcss build style.css -o views/404.css --watch"
+
   },
   "devDependencies": {
     "tailwindcss": "^3.4.3"

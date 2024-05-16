@@ -8,12 +8,13 @@ require_once 'controllers/Users.php';
 require_once 'controllers/Comments.php';
 require_once 'controllers/Articles.php';
 
-
 $request = $_REQUEST['regs'] ?? '';
 $method = $_SERVER['REQUEST_METHOD'];
 
+
 $commentsController = new Comments();
 $articlesController = new Articles();
+
 
 switch ($request) {
     case '':
@@ -42,6 +43,12 @@ switch ($request) {
             $usersController->login();
         }
       break;
+      case 'fetchUsers':
+        if ($method == 'GET') {
+            $usersController = new Users();
+            $usersController->fetchUsers();
+        }
+        break;
     case 'createComment':
         if ($method == 'POST') {
             $commentsController->createComment($_POST);

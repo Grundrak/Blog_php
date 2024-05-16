@@ -2,6 +2,7 @@
 
 require_once './models/User.php';
 
+
 class Users
 {
     private $userModel;
@@ -78,6 +79,34 @@ class Users
             }
         } else {
             include 'views/users/login.php';
+        }
+    }
+
+    public function fetchUsers()
+    {
+        $users = $this->userModel->getAllUsers();
+        error_log("Fetched users: " . print_r($users, true));
+        $_SESSION['fetchUsers']=$users;
+        header("Location: views/admin/users/index.php");
+        exit;
+    }
+    public function deleteUser($id)
+    {
+        $result = $this->userModel->deleteUser($id);
+        if ($result) {
+            header("Location: /blog-php/backend/index.php?regs=deleteUser");
+        } else {
+            echo "Error deleting user.";
+        }
+    }
+
+    public function updateUser($id, $userName, $email, $role, $avatar, $bio)
+    {
+        $result = $this->userModel->updateUser($id, $userName, $email, $role, $avatar, $bio);
+        if ($result) {
+            header("Location: /blog-php/backend/index.php?regs=updateUser");
+        } else {
+            echo "Error updating user.";
         }
     }
 }

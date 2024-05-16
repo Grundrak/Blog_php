@@ -42,4 +42,28 @@ class User
         $row = $this->db->single();
         return $row;
     }
+    public function getAllUsers()
+    {
+        try {
+            $stmt = $this->db->prepare('SELECT id, user_name, email, role, avatar, bio FROM users');
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // var_dump($result);  
+            return $result;
+        } catch (PDOException $e) {
+            error_log("Database error: " . $e->getMessage());
+            return [];
+        }
+    }
+    public function deleteUser($id)
+    {
+        $stmt = $this->db->prepare("DELETE FROM users WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
+
+    public function updateUser($id, $userName, $email, $role, $avatar, $bio)
+    {
+        $stmt = $this->db->prepare("UPDATE users SET user_name = ?, email = ?, role = ?, avatar = ?, bio = ? WHERE id = ?");
+        return $stmt->execute([$userName, $email, $role, $avatar, $bio, $id]);
+    }
 }

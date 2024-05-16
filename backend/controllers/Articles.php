@@ -1,5 +1,6 @@
 <?php
 
+
 require_once './models/Article.php';
 
 class Articles {

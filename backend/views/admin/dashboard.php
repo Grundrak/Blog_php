@@ -11,13 +11,13 @@
 <body class="bg-gray-100">
     <div class="min-h-screen flex flex-col">
 
-        <div class="flex flex-1 pt-16">
+        <div class="flex flex-1">
             <aside class="bg-[#7469b6] text-white w-64 p-4">
                 <nav>
                     <ul>
                         <li class="mb-2"><a href="/blog-php/backend/views/admin/dashboard.php" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg">Dashboard</a></li>
                         <li class="mb-2"><a href="/blog-php/backend/views/admin/articles/index.php" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg">Manage Articles</a></li>
-                        <li class="mb-2"><a href="/blog-php/backend/views/admin/users/index.php" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg">View Users</a></li>
+                        <li class="mb-2"><a href="/blog-php/backend/index.php?regs=fetchUsers" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg">View Users</a></li>
                     </ul>
                 </nav>
             </aside>

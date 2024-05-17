@@ -18,7 +18,7 @@ $flashMessages = getAndClearFlashMessages();
     <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center gap-16">
             <a aria-current="page" class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/views/home/home.php">Home</a>
-            <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/views/articles/articles.php">Blog</a>
+            <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/index.php?regs=getArticles">Blog</a>
             <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/views/post/post.php">Post</a>
             <a class="text-sm font-medium text-white transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 px-2 py-1 rounded-lg" href="/blog-php/backend/views/contactus/contact.php">Contact Us</a>
             <?php if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] == 'admin') : ?>

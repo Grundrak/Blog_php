@@ -21,17 +21,17 @@ $articleId = $_GET['id'];
     <link href="../contactus/contact.css" rel="stylesheet">
 </head>
 
-<body class="flex flex-col items-center justify-center ">
+<body class="flex flex-col items-center justify-center">
     <!-- Container for demo purpose -->
-    <section class="container  items-center flex justify-center py-20 ">
+    <section class="container  items-center flex justify-center py-20" style="margin-left: 100px">
             <!-- Section: Design Block -->
         <div class="w-full shrink-0 grow-0 basis-auto  md:w-9/12 px-3  ">
             <div>
                 <div class="  items-center  mx-auto justify-start  md:w-9/12 ">
                     <?php foreach ($articles as $article) : ?>
                     <?php if ($article['id'] == $articleId) : ?> 
-                        <div>
-                            <h5 class=" text-3xl font-bold">
+                        <div class="text-center">
+                            <h5 class="font-bold mb-5" style="font-size: 30px;">
                             <?= $article['title'] ?>
                             </h5>
                         </div>           
@@ -40,7 +40,7 @@ $articleId = $_GET['id'];
                     <div class="w-full shrink-0 grow-0 basis-auto  md:w-9/12">
                         <div class="relative mb-2 img-article overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20"
                             data-te-ripple-init data-te-ripple-color="light">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/slides/080.jpg" class="w-full" />
+                            <img src="../../upload/article/<?= basename($article['image_path']) ?>" class="w-full" />
                             <a href="#!">
                                 <div
                                     class="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100 bg-[hsla(0,0%,98.4%,.15)]">

@@ -5,50 +5,58 @@ require_once './models/Article.php';
 class Articles {
     private $articlesModel;
 
-
     public function __construct() {
         $this->articlesModel = new Article();
-
     }
 
-    public function createArticle($data) {
+    public function createArticle() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = [
-                'title' => $_POST['title'] ?? '',
-                'content' => $_POST['content'] ?? '',
-                'user_id' => $_POST['user_id'] ?? 0
-            ];
-
-            if (empty($data['title']) || empty($data['content']) || empty($data['user_id'])) {
-                echo "Empty fields";
+            if (!isset($_SESSION['user_id'])) {
+                echo "Please log in to create an article.";
                 return;
             }
 
-            if ($this->articlesModel->createArticle($data)) {
+            $data = [
+                'title' => $_POST['title'] ?? '',
+                'content' => $_POST['content'] ?? '',
+                'user_id' => $_SESSION['user_id'],
+                'image' => $_FILES['articleImage'] ?? null
+            ];
+
+            if (empty($data['title']) || empty($data['content'])) {
+                echo "Title and content are required.";
+                header('Location: views/admin/articles/index.php');
+                return;
+            }
+
+            if ($this->articlesModel->createArticle($data['title'], $data['content'], $data['image'])) {
                 echo "Article created successfully";
             } else {
                 echo "Failed to create article";
             }
         } else {
-            include './views/articles/articles.php';
+            include 'views/articles/articles.php';
         }
     }
 
     public function getArticles() {
-
         try {
             $articles = $this->articlesModel->getArticles();
-    
             if (empty($articles)) {
                 echo "No articles available.";
             } else {
+
+//                 $_SESSION['fetchArticles'] = $articles;Admin
+//                 include 'views/articles/articles.php';
+
                 $_SESSION['getArticles']=$articles;
+
             }
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
-    
+
     public function editArticle($id) {
         if (!$id || !is_numeric($id)) {
             echo "Invalid article ID";
@@ -56,36 +64,35 @@ class Articles {
         }
 
         $article = $this->articlesModel->getArticleById($id);
-
         if (!$article) {
             echo "Article not found";
             return;
         }
 
-        include './views/articles/edit_article.php'; // Assuming there's an edit_article.php view
+        include './views/articles/edit_article.php';
     }
 
-    public function updateArticle($data) {
+    public function updateArticle() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = $_POST['id'] ?? '';
             $data = [
                 'title' => $_POST['title'] ?? '',
                 'content' => $_POST['content'] ?? '',
-                'user_id' => $_POST['user_id'] ?? 0
+                'image' => $_FILES['articleImage'] ?? null
             ];
 
-            if (empty($id) || empty($data['title']) || empty($data['content']) || empty($data['user_id'])) {
+            if (empty($id) || empty($data['title']) || empty($data['content'])) {
                 echo "Empty fields";
                 return;
             }
 
-            if ($this->articlesModel->updateArticle($id, $data)) {
+            if ($this->articlesModel->updateArticle($id, $data['title'], $data['content'], $data['image'])) {
                 echo "Article updated successfully";
             } else {
                 echo "Failed to update article";
             }
         } else {
-            include './views/articles/edit_article.php'; // Assuming there's an edit_article.php view
+            include './views/articles/edit_article.php';
         }
     }
 
@@ -102,5 +109,3 @@ class Articles {
         }
     }
 }
-
-

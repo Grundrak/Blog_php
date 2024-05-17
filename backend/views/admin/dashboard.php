@@ -1,5 +1,17 @@
-<?php include '../corps/navbar.php'; ?>
 
+<?php
+include '../corps/navbar.php';
+require_once '../../helpers/session.php';
+
+// Check if the user is logged in and if they are an admin
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['user']['role'] !== 'admin') {
+    // Redirect non-admin users to the home page
+    header('Location: /blog-php/backend/views/home/home.php');
+    exit;
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

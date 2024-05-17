@@ -34,7 +34,7 @@ include_once '../../../helpers/session.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <?php foreach ($articles as $article): ?>
+                        <?php foreach ($articles as $article): ?>
                         <tr>
                             <td class="py-2 px-4 border-b"><?php echo $article->title; ?></td>
                             <td class="py-2 px-4 border-b">
@@ -43,7 +43,7 @@ include_once '../../../helpers/session.php';
                 <a href="/blog-php/backend/views/admin/articles/delete.php?id=<?php echo $article->id; ?>" class="text-red-500 hover:underline ml-2">Delete</a>
             </td>
         </tr>
-        <?php endforeach; ?> -->
+        <?php endforeach; ?> 
     </tbody>
 </table>
 </main>

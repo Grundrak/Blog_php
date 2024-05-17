@@ -4,14 +4,24 @@ $users = $_SESSION['fetchUsers'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Users</title>
     <link rel="stylesheet" href="../../404.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .centered {
+            text-align: center;
+            vertical-align: middle;
+        }
+        img.avatar {
+            height: 50px; /* Adjust size as needed */
+            width: auto;
+            border-radius: 50%; /* Optional: for rounded avatars */
+        }
+    </style>
 </head>
-
 <body class="bg-gray-100">
     <div class="min-h-screen flex flex-col">
         <div class="flex flex-1">
@@ -29,34 +39,38 @@ $users = $_SESSION['fetchUsers'];
                 <table class="min-w-full bg-white mt-4">
                     <thead>
                         <tr>
-                            <th class="py-2 px-4 border-b">Username</th>
-                            <th class="py-2 px-4 border-b">Email</th>
-                            <th class="py-2 px-4 border-b">Role</th>
-                            <th class="py-2 px-4 border-b">Avatar</th>
-                            <th class="py-2 px-4 border-b">Bio</th>
+                            <th class="py-2 px-4 border-b centered">Username</th>
+                            <th class="py-2 px-4 border-b centered">Email</th>
+                            <th class="py-2 px-4 border-b centered">Role</th>
+                            <th class="py-2 px-4 border-b centered">Avatar</th>
+                            <th class="py-2 px-4 border-b centered">Bio</th>
+                            <th class="py-2 px-4 border-b centered">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php if (isset($users) && is_array($users) && !empty($users)): ?>
-                            <?php foreach ($users as $user) : ?>
-                                <tr>
-                                    <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($user['user_name']); ?></td>
-                                    <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($user['email']); ?></td>
-                                    <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($user['role']); ?></td>
-                                    <td class="py-2 px-4 border-b"><img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar" style="height: 50px;"></td>
-                                    <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($user['bio']); ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
+                        <?php foreach ($users as $user) : ?>
                             <tr>
-                                <td colspan="5" class="py-2 px-4 border-b">No users found.</td>
+                                <td class="py-2 px-4 border-b centered"><?php echo htmlspecialchars($user['user_name']); ?></td>
+                                <td class="py-2 px-4 border-b centered"><?php echo htmlspecialchars($user['email']); ?></td>
+                                <td class="py-2 px-4 border-b centered"><?php echo htmlspecialchars($user['role']); ?></td>
+                                <td class="py-2 px-4 border-b centered"><img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar" class="avatar"></td>
+                                <td class="py-2 px-4 border-b centered"><?php echo htmlspecialchars($user['bio']); ?></td>
+                                <td class="py-2 px-4 border-b centered">
+                                <a href="/blog-php/backend/index.php?regs=editUser&id=<?php echo $user['id']; ?>" class="text-blue-500 hover:underline"><i class="fas fa-edit"></i></a>
+                                    <a href="/blog-php/backend/views/admin/users/delete.php?id=<?php echo $user['id']; ?>" class="text-red-500 hover:underline ml-2"><i class="fas fa-trash"></i></a>
+                                </td>
                             </tr>
-                        <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <tr>
+                          <td colspan="6" class="py-2 px-4 border-b centered">No users found.</td>
+                        </tr>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </main>
         </div>
     </div>
 </body>
-
 </html>

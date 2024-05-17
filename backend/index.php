@@ -8,6 +8,7 @@ require_once 'controllers/Users.php';
 require_once 'controllers/Comments.php';
 require_once 'controllers/Articles.php';
 
+
 $request = $_REQUEST['regs'] ?? '';
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -42,47 +43,78 @@ switch ($request) {
             $usersController = new Users();
             $usersController->login();
         }
-      break;
-      case 'fetchUsers':
+        break;
+    case 'fetchUsers':
         if ($method == 'GET') {
             $usersController = new Users();
             $usersController->fetchUsers();
         }
         break;
+    case 'fetchUser':
+
+        $usersController = new Users();
+        echo 'process fetch user';
+        $usersController->getUserById($_SESSION['user_id']);
+
+
+        break;
+    case 'editUser':
+        if ($method == 'GET' && isset($_GET['id'])) {
+            $user_id = intval($_GET['id']);
+            $usersController = new Users();
+            $usersController->getUser($user_id);
+        }
+        break;
+
+
+    case 'deleteUser':
+        if ($method == 'POST' && verifyCsrfToken($_POST['csrf_token'])) {
+            $userId = intval($_POST['user_id']);
+            $usersController = new Users();
+            $usersController->deleteUser($userId);
+        }
+        break;
+    case 'updateProfil':
+
+        $usersController = new Users();
+        $usersController->updateProfile();
+
+        break;
+
     case 'createComment':
         if ($method == 'POST') {
             $commentsController->createComment($_POST);
-        } 
+        }
 
         break;
 
     case 'readComments':
         if ($method == 'GET') {
             $commentsController->getCommentsofArticle($_GET['article_id']);
-        } 
-        break;  
-        
+        }
+        break;
+
     case 'getCommentById':
         if ($method == 'GET') {
             $commentsController->getCommentById($_GET['id']);
-        } 
-        break;    
+        }
+        break;
 
     case 'updateComment':
         if ($method == 'POST') {
             $commentsController->updateComment($_POST['id'], $_POST['content']);
-        }  
-        break;  
+        }
+        break;
 
     case 'deleteComment':
         if ($method == 'POST') {
             $commentsController->deleteComment($_POST['id']);
         }
-        break;  
-        
+        break;
+
     case 'createArticle':
         if ($method == 'POST') {
-            $articlesController->createArticle($_POST['title'], $_POST['content'], $_POST['user_id']);
+            $articlesController->createArticle();
         }
         break;
 
@@ -93,5 +125,5 @@ switch ($request) {
         break;  
 
     default:
-        break;    
+        break;
 }

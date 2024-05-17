@@ -26,21 +26,15 @@ class Article {
             $params[] = $imagePath;
         }
 
+    
+        $sql .= " WHERE id = ?";
+        $params[] = $id;
 
-//         $sql .= " WHERE id = ?";
-//         $params[] = $id;
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($params);
+    }
 
-//         $stmt = $this->db->prepare($sql);
-//         return $stmt->execute($params);
-//     }
-
-    public function getArticles() {
-        try {
-            $sql = "SELECT * FROM articles";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute();
-
-
+  
     public function getArticles() {
         $sql = "SELECT * FROM articles";
         $stmt = $this->db->prepare($sql);

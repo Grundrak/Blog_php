@@ -6,9 +6,7 @@ $articles = $_SESSION['getArticles'];
 
 <link rel="stylesheet" href="../404.css">
 
-
 <main class="flex flex-col justify-center items-center">
-    <a href="/blog-php/backend/index.php?regs=getArticles">View Articles</a>
     <div class="mr-[3%]">
         <input
             type="text"
@@ -28,7 +26,7 @@ $articles = $_SESSION['getArticles'];
             <?php foreach ($articles as $article) : ?>
                 <article class="card w-[90%] bg-[#D9D9D9] flex flex-col pt-5 pl-[8%]" style="height: 45vh">
                     <div class="blog-image w-[90%]">
-                        <img class="" src="https://www.shutterstock.com/shutterstock/videos/1040794502/thumb/1.jpg?ip=x480" alt="">
+                        <img class="" src="../../upload/article/<?= basename($article['image_path']) ?>" alt="">
                     </div>
                     <a class="mt-5 mb-5 w-[90%]" href="../post/post.php?id=<?= $article['id'] ?>">
                         <h1 class="text-16 font-bold"><?= $article['title'] ?></h1>

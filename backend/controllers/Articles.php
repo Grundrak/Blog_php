@@ -60,7 +60,10 @@ class Articles
             if (empty($articles)) {
                 echo "No articles available.";
             } else {
-                $_SESSION['getArticles'] = $articles;
+
+                $_SESSION['getArticles']=$articles;
+                header("Location: views/articles/articles.php");
+
             }
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();

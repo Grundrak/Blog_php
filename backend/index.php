@@ -117,6 +117,13 @@ switch ($request) {
             $articlesController->createArticle();
         }
         break;
+
+    case 'getArticles':
+        if ($method == 'GET') {
+            $articlesController->getArticles();
+        }
+        break;  
+
     default:
         break;
 }

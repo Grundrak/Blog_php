@@ -45,8 +45,12 @@ class Articles {
             if (empty($articles)) {
                 echo "No articles available.";
             } else {
-                $_SESSION['fetchArticles'] = $articles;
-                include 'views/articles/articles.php';
+
+//                 $_SESSION['fetchArticles'] = $articles;Admin
+//                 include 'views/articles/articles.php';
+
+                $_SESSION['getArticles']=$articles;
+
             }
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();

@@ -88,8 +88,9 @@ class User
         $params = [$user_name, $email, $bio];
     
         if (!empty($password)) {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT); 
             $sql .= ", password = ?";
-            $params[] = $password;
+            $params[] = $hashedPassword;
         }
         if (!empty($avatar)) {
             $sql .= ", avatar = ?";
@@ -106,17 +107,6 @@ class User
         }
         return true;
     }
-    // public function authenticateUser($username, $password) {
-    //     $sql = "SELECT * FROM users WHERE username = :username";
-    //     $stmt = $this->db->prepare($sql);
-    //     $stmt->execute(['username' => $username]);
-    //     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    //     if ($user && password_verify($password, $user['password'])) {
-    //         return $user; // Return user details if password is correct
-    //     } else {
-    //         return false; // Return false if authentication fails
-    //     }
-    // }
 
 }

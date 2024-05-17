@@ -1,18 +1,35 @@
 <?php
 include_once '../../../helpers/session.php';
- ?>
+$articles = $_SESSION['getArticles'];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Articles</title>
-<link rel="stylesheet" href="../../404.css">
+    <link rel="stylesheet" href="../../404.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .centered {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        img.article-image {
+            width: 100px;
+            /* Adjust size as needed */
+            height: auto;
+            border-radius: 5px;
+            /* Optional: for rounded corners */
+        }
+    </style>
 </head>
+
 <body class="bg-gray-100">
     <div class="min-h-screen flex flex-col">
-
         <div class="flex flex-1">
             <aside class="bg-[#7469b6] text-white w-64 p-4">
                 <nav>
@@ -29,29 +46,39 @@ include_once '../../../helpers/session.php';
                 <table class="min-w-full bg-white mt-4">
                     <thead>
                         <tr>
-                            <th class="py-2 px-4 border-b">Title</th>
-                            <th class="py-2 px-4 border-b">Actions</th>
+                            <th class="py-2 px-4 border-b centered">Title</th>
+                            <th class="py-2 px-4 border-b centered">Content</th>
+                            <th class="py-2 px-4 border-b centered">Image</th>
+                            <th class="py-2 px-4 border-b centered">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($articles as $article): ?>
-                        <tr>
-                            <td class="py-2 px-4 border-b"><?php echo $article->title; ?></td>
-                            <td class="py-2 px-4 border-b">
-                                
-                                <a href="/blog-php/backend/views/admin/articles/edit.php?id=<?php echo $article->id; ?>" class="text-blue-500 hover:underline">Edit</a>
-                <a href="/blog-php/backend/views/admin/articles/delete.php?id=<?php echo $article->id; ?>" class="text-red-500 hover:underline ml-2">Delete</a>
-            </td>
-        </tr>
-        <?php endforeach; ?> 
-    </tbody>
-</table>
-</main>
-</div>
-</div>
+                        <?php foreach ($articles as $article) : ?>
+                            <tr>
+                                <td class="py-2 px-4 border-b centered"><?php echo htmlspecialchars($article['title']); ?></td>
+                                <td class="py-2 px-4 border-b centered"><?php echo htmlspecialchars($article['content']); ?></td>
+                                <td class="py-2 px-4 border-b centered">
+                                    <img src="<?php ($article['image_path']); ?>" alt="Article Image" class="article-image">
+                                </td>
+                                <td class="py-2 px-4 border-b centered">
+                                    <a href="/blog-php/backend/index.php?regs=fetchArticle&id=<?php echo $article['id']; ?>" class="text-blue-500 hover:underline">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="/blog-php/backend/index.php?regs=deleteArticle&id=<?= $article['id'] ?>" onclick="return confirm('Are you sure you want to delete this article?');" class="text-red-500 hover:underline ml-2">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </main>
+        </div>
+    </div>
 </body>
+
 </html>
 
-<?php 
-    // include_once '../corps/footer.php';
+<?php
+// include_once '../corps/footer.php';
 ?>

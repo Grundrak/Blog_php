@@ -1,7 +1,7 @@
 <?php
- include_once '../../../helpers/session.php';
+include_once '../../../helpers/session.php';
 
-$user = $_SESSION['userEdit']; 
+$user = $_SESSION['userEdit'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +34,10 @@ $user = $_SESSION['userEdit'];
                     <input type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($user['email']); ?>" class="w-full p-3 rounded-lg bg-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600" required>
                     <input type="password" name="password" placeholder="Password (leave blank to keep current)" class="w-full p-3 rounded-lg bg-gray-200 text-gray-700 focus:outline-none">
                     <input type="text" name="avatar" placeholder="Avatar URL" value="<?php echo htmlspecialchars($user['avatar']); ?>" class="w-full p-3 rounded-lg bg-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600">
+                    <select name="role" class="w-full p-3 rounded-lg bg-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600" required>
+                        <option value="admin" <?php echo ($user['role'] == 'admin' ? 'selected' : ''); ?>>Admin</option>
+                        <option value="utilisateur" <?php echo ($user['role'] == 'utilisateur' ? 'selected' : ''); ?>>Utilisateur</option>
+                    </select>
                     <textarea name="bio" placeholder="Bio" class="w-full p-3 rounded-lg bg-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"><?php echo htmlspecialchars($user['bio']); ?></textarea>
                     <button type="submit" class="w-full p-3 rounded-lg bg-purple-700 text-white font-bold hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-600">Update User</button>
                 </form>

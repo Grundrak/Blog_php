@@ -159,19 +159,36 @@ class Users
     }
     public function deleteUser($id)
     {
+        if (!$id || !is_numeric($id)) {
+            echo "Invalid user ID";
+            return;
+        }
+    
         $result = $this->userModel->deleteUser($id);
         if ($result) {
+            echo "User deleted successfully";
+            $this->updateSessionUsersAfterDeletion($id);
             header("Location: /blog-php/backend/views/admin/users/index.php");
         } else {
             echo "Error deleting user.";
         }
     }
+    
+    private function updateSessionUsersAfterDeletion($id) {
+        if (isset($_SESSION['fetchUsers'])) {
+            // Filter out the deleted user from the session data
+            $_SESSION['fetchUsers'] = array_filter($_SESSION['fetchUsers'], function($user) use ($id) {
+                return $user['id'] != $id;
+            });
+        }
+    }
 
-    public function updateUser($id, $userName, $email, $role, $avatar, $bio)
-    {
+    public function updateUser($id, $userName, $email, $role, $avatar, $bio) {
+        error_log("Updating user: $id, $userName, $email, $role, $avatar, $bio");
         $result = $this->userModel->updateUser($id, $userName, $email, $role, $avatar, $bio);
         if ($result) {
             header("Location: /blog-php/backend/index.php?regs=updateUser");
+            exit; 
         } else {
             echo "Error updating user.";
         }

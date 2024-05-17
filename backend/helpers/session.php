@@ -79,7 +79,7 @@ function generateCsrfToken()
 function verifyCsrfToken($token)
 {
     if (isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] === $token) {
-        unset($_SESSION['csrf_token']); // Prevent reuse
+        unset($_SESSION['csrf_token']); 
         return true;
     }
     return false;

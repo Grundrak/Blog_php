@@ -5,7 +5,7 @@ class Database {
     private $dbname = 'blog_php';
     private $username = 'root';
 
-    private $password = '';
+    private $password = 'YJbs7U#tLW4';
 
     private $dbh;
     private $stmt;

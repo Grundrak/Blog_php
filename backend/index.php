@@ -59,20 +59,20 @@ switch ($request) {
 
         break;
     case 'editUser':
-        if ($method == 'GET' && isset($_GET['id'])) {
+        
             $user_id = intval($_GET['id']);
             $usersController = new Users();
-            $usersController->getUser($user_id);
-        }
+            $usersController->updateUser($user_id);
+        
         break;
 
 
     case 'deleteUser':
-        if ($method == 'POST' && verifyCsrfToken($_POST['csrf_token'])) {
-            $userId = intval($_POST['user_id']);
-            $usersController = new Users();
-            $usersController->deleteUser($userId);
-        }
+
+        $userId = intval($_GET['id']);
+        $usersController = new Users();
+        $usersController->deleteUser($userId);
+
         break;
     case 'updateProfil':
 
@@ -122,7 +122,22 @@ switch ($request) {
         if ($method == 'GET') {
             $articlesController->getArticles();
         }
-        break;  
+        break;
+    case 'deleteArticle':
+        $articleId = intval($_GET['id']);
+        $articlesController->deleteArticle($articleId);
+
+        break;
+    case 'fetchArticle':
+        $articleId = intval($_GET['id']);
+        $articlesController->getArticleById($articleId);
+
+        break;
+        case 'editArticle':
+            $articleId = intval($_GET['id']);
+            $articlesController->updateArticle($articleId);
+    
+            break;
 
     default:
         break;

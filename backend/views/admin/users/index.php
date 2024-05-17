@@ -58,7 +58,9 @@ $users = $_SESSION['fetchUsers'];
                                 <td class="py-2 px-4 border-b centered"><?php echo htmlspecialchars($user['bio']); ?></td>
                                 <td class="py-2 px-4 border-b centered">
                                 <a href="/blog-php/backend/index.php?regs=editUser&id=<?php echo $user['id']; ?>" class="text-blue-500 hover:underline"><i class="fas fa-edit"></i></a>
-                                    <a href="/blog-php/backend/views/admin/users/delete.php?id=<?php echo $user['id']; ?>" class="text-red-500 hover:underline ml-2"><i class="fas fa-trash"></i></a>
+                                <a href="/blog-php/backend/index.php?regs=deleteUser&id=<?= $user['id'] ?>" onclick="return confirm('Are you sure you want to delete this user?');" class="text-red-500 hover:underline ml-2">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

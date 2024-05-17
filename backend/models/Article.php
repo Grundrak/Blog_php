@@ -16,22 +16,20 @@ class Article {
         return $stmt->execute([$title, $content, $imagePath]);
     }
 
-    public function updateArticle($id, $title, $content, $file) {
-        $imagePath = $this->uploadImage($file);
-        $sql = "UPDATE articles SET title = ?, content = ?";
-        $params = [$title, $content];
-
-        if ($imagePath) {
-            $sql .= ", image_path = ?";
-            $params[] = $imagePath;
+    public function updateArticle($id, $title, $content, $imagePath) {
+        try {
+            
+            $sql = "UPDATE articles SET title = :title, content = :content, image_path = :image_path WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':image_path', $imagePath);  
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {        
+            error_log('Failed to update article: ' . $e->getMessage());
+            return false;
         }
-
-    
-        $sql .= " WHERE id = ?";
-        $params[] = $id;
-
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute($params);
     }
 
   
@@ -43,12 +41,10 @@ class Article {
     }
 
     public function getArticleById($id) {
-        $sql = "SELECT * FROM articles WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $this->db->prepare("SELECT * FROM articles WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC); 
     }
-
     public function deleteArticle($id) {
         $sql = "DELETE FROM articles WHERE id = ?";
         $stmt = $this->db->prepare($sql);
@@ -65,7 +61,8 @@ class Article {
             $safeFilename = preg_replace("/[^a-zA-Z0-9.\-_]/", "_", $filename);
             $targetFile = $targetDir . $safeFilename;
             if (move_uploaded_file($file['tmp_name'], $targetFile)) {
-                return $targetFile;
+                // Return a path relative to the root of the project or a URL path
+                return "/blog-php/backend/upload/article/" . $safeFilename;
             }
         }
         return null;

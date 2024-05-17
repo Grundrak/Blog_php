@@ -2,10 +2,12 @@
 
 require_once './models/Article.php';
 
-class Articles {
+class Articles
+{
     private $articlesModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->articlesModel = new Article();
     }
 
@@ -15,22 +17,26 @@ class Articles {
                 echo "Please log in to create an article.";
                 return;
             }
-
+    
             $data = [
                 'title' => $_POST['title'] ?? '',
                 'content' => $_POST['content'] ?? '',
                 'user_id' => $_SESSION['user_id'],
                 'image' => $_FILES['articleImage'] ?? null
             ];
-
+    
             if (empty($data['title']) || empty($data['content'])) {
                 echo "Title and content are required.";
                 header('Location: views/admin/articles/index.php');
-                return;
+                exit;
             }
-
-            if ($this->articlesModel->createArticle($data['title'], $data['content'], $data['image'])) {
-                echo "Article created successfully";
+    
+            $newArticleId = $this->articlesModel->createArticle($data['title'], $data['content'], $data['image']);
+            if ($newArticleId) {
+                $newArticle = $this->articlesModel->getArticleById($newArticleId);
+                $this->updateSessionArticlesAfterCreation($newArticle);
+                header("Location: /blog-php/backend/views/admin/articles/index.php");
+                exit;
             } else {
                 echo "Failed to create article";
             }
@@ -38,65 +44,94 @@ class Articles {
             include 'views/articles/articles.php';
         }
     }
-
-    public function getArticles() {
+    private function updateSessionArticlesAfterCreation($newArticle) {
+        if (isset($_SESSION['getArticles'])) {
+            array_push($_SESSION['getArticles'], $newArticle);
+        } else {
+            $_SESSION['getArticles'] = [$newArticle];  // Initialize if not already set
+        }
+        // Debugging output
+        error_log('Updated session articles: ' . print_r($_SESSION['getArticles'], true));
+    }
+    public function getArticles()
+    {
         try {
             $articles = $this->articlesModel->getArticles();
             if (empty($articles)) {
                 echo "No articles available.";
             } else {
-
-//                 $_SESSION['fetchArticles'] = $articles;Admin
-//                 include 'views/articles/articles.php';
-
-                $_SESSION['getArticles']=$articles;
-
+                $_SESSION['getArticles'] = $articles;
             }
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
 
-    public function editArticle($id) {
-        if (!$id || !is_numeric($id)) {
-            echo "Invalid article ID";
-            return;
-        }
-
+    public function getArticleById($id)
+    {
         $article = $this->articlesModel->getArticleById($id);
-        if (!$article) {
-            echo "Article not found";
-            return;
-        }
-
-        include './views/articles/edit_article.php';
-    }
-
-    public function updateArticle() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id = $_POST['id'] ?? '';
-            $data = [
-                'title' => $_POST['title'] ?? '',
-                'content' => $_POST['content'] ?? '',
-                'image' => $_FILES['articleImage'] ?? null
-            ];
-
-            if (empty($id) || empty($data['title']) || empty($data['content'])) {
-                echo "Empty fields";
-                return;
-            }
-
-            if ($this->articlesModel->updateArticle($id, $data['title'], $data['content'], $data['image'])) {
-                echo "Article updated successfully";
-            } else {
-                echo "Failed to update article";
-            }
+        if ($article) {
+            $_SESSION['articleEd'] = $article;
+            header("Location: /blog-php/backend/views/admin/articles/edit.php");
+            exit;
         } else {
-            include './views/articles/edit_article.php';
+            echo "No article found with ID: $id";
+            return null;
         }
     }
 
-    public function deleteArticle($id) {
+    public function updateArticle($id)
+    {
+        $title = $_POST['title'] ?? '';
+        $content = $_POST['content'] ?? '';
+        $image = $_FILES['articleImage'] ?? null;
+        $imagePath = null;
+
+        if ($image && $image['error'] == UPLOAD_ERR_OK) {
+            $safeName = basename($image['name']);
+            $safeName = preg_replace("/[^a-zA-Z0-9.]/", "_", $safeName);
+            $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/blog-php/backend/upload/article/';
+            $imagePath = $targetDir . $safeName;
+
+            if (!is_dir($targetDir) && !mkdir($targetDir, 0755, true)) {
+                echo 'Failed to create directory for image.';
+                header('Location: views/admin/articles/index.php');
+                exit;
+            }
+
+            if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
+                echo 'Failed to upload image.';
+                header('Location: views/admin/articles/index.php');
+                exit;
+            }
+        }
+
+        if ($this->articlesModel->updateArticle($id, $title, $content, $imagePath)) {
+            $updatedArticle = $this->articlesModel->getArticleById($id);
+            $this->updateSessionArticlesAfterEdit($id, $updatedArticle);
+            header('Location: views/admin/articles/index.php');
+            exit;
+        } else {
+            echo 'Failed to update article.';
+            header('Location: views/admin/articles/index.php');
+            exit;
+        }
+    }
+
+    private function updateSessionArticlesAfterEdit($id, $updatedArticle)
+    {
+        if (isset($_SESSION['getArticles'])) {
+            $_SESSION['getArticles'] = array_map(function ($article) use ($id, $updatedArticle) {
+                if ($article['id'] == $id) {
+                    return $updatedArticle;
+                }
+                return $article;
+            }, $_SESSION['getArticles']);
+        }
+    }
+
+    public function deleteArticle($id)
+    {
         if (!$id || !is_numeric($id)) {
             echo "Invalid article ID";
             return;
@@ -104,8 +139,20 @@ class Articles {
 
         if ($this->articlesModel->deleteArticle($id)) {
             echo "Article deleted successfully";
+            $this->updateSessionArticlesAfterDeletion($id);
+            header('Location: views/admin/articles/index.php');
+            exit;
         } else {
             echo "Failed to delete article";
+        }
+    }
+
+    private function updateSessionArticlesAfterDeletion($id)
+    {
+        if (isset($_SESSION['getArticles'])) {
+            $_SESSION['getArticles'] = array_filter($_SESSION['getArticles'], function ($article) use ($id) {
+                return $article['id'] != $id;
+            });
         }
     }
 }

@@ -55,15 +55,68 @@ class User
             return [];
         }
     }
+    public function getUserById($id) {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching user by ID: " . $e->getMessage());
+            return false;
+        }
+    }
+    public function getUser($id) {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching user by ID: " . $e->getMessage());
+            return false;
+        }
+    }
     public function deleteUser($id)
     {
         $stmt = $this->db->prepare("DELETE FROM users WHERE id = ?");
         return $stmt->execute([$id]);
     }
-
-    public function updateUser($id, $userName, $email, $role, $avatar, $bio)
+    public function updateUser($id, $user_name, $email, $password, $avatar, $bio)
     {
-        $stmt = $this->db->prepare("UPDATE users SET user_name = ?, email = ?, role = ?, avatar = ?, bio = ? WHERE id = ?");
-        return $stmt->execute([$userName, $email, $role, $avatar, $bio, $id]);
+        $sql = "UPDATE users SET user_name = ?, email = ?, bio = ?";
+        $params = [$user_name, $email, $bio];
+    
+        if (!empty($password)) {
+            $sql .= ", password = ?";
+            $params[] = $password;
+        }
+        if (!empty($avatar)) {
+            $sql .= ", avatar = ?";
+            $params[] = $avatar;
+        }
+    
+        $sql .= " WHERE id = ?";
+        $params[] = $id;
+    
+        $stmt = $this->db->prepare($sql);
+        if (!$stmt->execute($params)) {
+            error_log('Update failed: ' . implode('; ', $stmt->errorInfo()));
+            return false;
+        }
+        return true;
     }
+    // public function authenticateUser($username, $password) {
+    //     $sql = "SELECT * FROM users WHERE username = :username";
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->execute(['username' => $username]);
+    //     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    //     if ($user && password_verify($password, $user['password'])) {
+    //         return $user; // Return user details if password is correct
+    //     } else {
+    //         return false; // Return false if authentication fails
+    //     }
+    // }
+
 }

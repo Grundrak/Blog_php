@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS articles (
   content TEXT NOT NULL,
   published_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   user_id INT,
-
+  image_path varchar(255) DEFAULT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

@@ -70,8 +70,13 @@ class Users
                 $_SESSION['logged_in'] = true;
                 $_SESSION['user_id'] = $user['id'];
                 setFlash('login_success', 'You are now logged in.');
-                header('Location: views/admin/dashboard.php');
+                if ($user["role"] == 'admin') {
+                    header('Location: /blog-php/backend/views/admin/dashboard.php');
+                } else {
+                    header('Location: /blog-php/backend/views/home/home.php');
+                }
                 exit;
+                
             } else {
                 $_SESSION['error'] = 'Invalid login credentials';
                 setFlash('login_error', 'Invalid credentials.');
@@ -91,11 +96,72 @@ class Users
         header("Location: views/admin/users/index.php");
         exit;
     }
+    public function getUserById($id) {
+        $user = $this->userModel-> getUserById($id);
+        error_log("User fetched: " . print_r($user, true));  
+
+        if ($user) {
+            $_SESSION['user']=$user;
+            $_SESSION['userName']=$user['user_name'];
+            header("Location: views/profil/profil.php");
+            exit;
+        } else {
+            $_SESSION['user'] = null;  
+            error_log("No user found with ID: " . $id);
+            header("Location: /blog-php/backend/views/profil/profil.php"); 
+            exit;
+        }
+    }
+    public function getUser($id) {
+        $user = $this->userModel-> getUser($id);
+        error_log("User fetched: " . print_r($user, true));  
+
+        if ($user) {
+            $_SESSION['userEdit'] = $user;  
+            header("Location: /blog-php/backend/views/admin/users/edit.php");
+            exit;
+        } else {
+            echo "No user found with ID";
+            // Optionally redirect back to user list or show an error message
+        }
+    }
+    public function updateProfile()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_SESSION['user_id'];
+            $userName = $_POST['user_name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $avatar = $_FILES['avatar'] ?? null;
+            $bio = $_POST['bio'] ?? '';
+            $avatarPath = null;
+    
+            if (!empty($password)) {
+                $password = password_hash($password, PASSWORD_DEFAULT);
+            }
+            if ($avatar && $avatar['error'] == UPLOAD_ERR_OK) {
+                $avatarPath = '/blog-php/backend/upload/avatar/' . basename($avatar['name']);
+                if (!move_uploaded_file($avatar['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $avatarPath)) {
+                    setFlash('update_error', 'Failed to upload avatar.');
+                    header('Location: views/profil/profil.php');
+                    exit;
+                }
+            }
+    
+            if ($this->userModel->updateUser($id, $userName, $email, $password, $avatarPath, $bio)) {
+                setFlash('update_success', 'Profile updated successfully.');
+            } else {
+                setFlash('update_error', 'Failed to update profile.');
+            }
+            header('Location: views/profil/profil.php');
+            exit;
+        }
+    }
     public function deleteUser($id)
     {
         $result = $this->userModel->deleteUser($id);
         if ($result) {
-            header("Location: /blog-php/backend/index.php?regs=deleteUser");
+            header("Location: /blog-php/backend/views/admin/users/index.php");
         } else {
             echo "Error deleting user.";
         }

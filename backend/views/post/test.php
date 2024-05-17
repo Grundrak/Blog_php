@@ -30,7 +30,7 @@ $articles = $_SESSION['getArticles'];
                     <div class="blog-image w-[90%]">
                         <img class="" src="https://www.shutterstock.com/shutterstock/videos/1040794502/thumb/1.jpg?ip=x480" alt="">
                     </div>
-                    <a class="mt-5 mb-5 w-[90%]" href="../post/post.php?id=<?= $article['id'] ?>">
+                    <a id="<?= $article['id'] ?>" class="mt-5 mb-5 w-[90%]" href="test.php?id=<?= $article['id'] ?>">
                         <h1 class="text-16 font-bold"><?= $article['title'] ?></h1>
                     </a>
                     <div class="flex items-center">

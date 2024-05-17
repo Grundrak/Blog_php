@@ -29,7 +29,6 @@ class Article {
         }
     }
 
-
     public function getArticles() {
         try {
             $sql = "SELECT * FROM articles";

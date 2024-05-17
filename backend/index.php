@@ -85,6 +85,13 @@ switch ($request) {
             $articlesController->createArticle($_POST['title'], $_POST['content'], $_POST['user_id']);
         }
         break;
+
+    case 'getArticles':
+        if ($method == 'GET') {
+            $articlesController->getArticles();
+        }
+        break;  
+
     default:
         break;    
 }

@@ -2,9 +2,9 @@
 class Database {
 
     private  $host = 'localhost';
-    private $dbname = 'blog_db';
+    private $dbname = 'blog_php';
     private $username = 'root';
-    private $password = 'Ab20182018';
+    private $password = '';
     private $dbh;
     private $stmt;
     private $error;
@@ -40,12 +40,12 @@ class Database {
         $this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public function single() {
         $this->execute();
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     public function rowCount() {
         return $this->stmt->rowCount();
     }
@@ -60,7 +60,7 @@ class Database {
     //         } catch (PDOException $e) {
     //             exit("Erreur lors de la création des tables : " . $e->getMessage());
     //         }
-    //     }     
+    //     }
     // }
 
     // $database = new Database();
